@@ -25,7 +25,7 @@ walk(video_path)
 def get_key_frame(video):
     cap = cv2.VideoCapture(video)
     fps = cap.get(cv2.CAP_PROP_FPS)
-    key = int(fps * 2) + 1
+    key = int(fps * 5) + 1
     cap.set(cv2.CAP_PROP_POS_FRAMES, key)
     _, frame = cap.read()
     cap.release()
@@ -35,7 +35,7 @@ def get_key_frame(video):
 
 
 for video in videos:
-    name = video.rstrip('.mp4') + '.jpg'
+    name = video[:-4] + '.jpg'
     frame = get_key_frame(video)
     cv2.imwrite(name, frame)
     print(name)
