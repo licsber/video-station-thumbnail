@@ -1,5 +1,9 @@
 #!/bin/bash
 
+KEY_FRAME_INDEX=$1
+
+echo "INDEX=${KEY_FRAME_INDEX}"
+
 function walk() {
     for file in `ls $1`
     do
@@ -16,7 +20,7 @@ function walk() {
                     -of csv $video \
                     | grep -n I \
                     | cut -d ':' -f 1 \
-                    | awk 'NR==4{print "key="$1}')
+                    | awk 'NR==$KEY_FRAME_INDEX{print "key="$1}')
 
                 name=${video/%".mp4"/".jpg"}
                 

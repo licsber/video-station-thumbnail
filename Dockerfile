@@ -9,3 +9,5 @@ VOLUME [ "/video" ]
 COPY main.sh .
 
 ENTRYPOINT [ "/main.sh" ]
+
+CMD [ "4" ]
