@@ -4,6 +4,10 @@ KEY_FRAME_INDEX=$1
 
 echo "INDEX=${KEY_FRAME_INDEX}"
 
+FORCE=${2:-y}
+
+echo "FORCE=${FORCE}"
+
 function walk() {
     for file in `ls $1`
     do
@@ -14,6 +18,14 @@ function walk() {
             video=$1"/"$file
             if [[ $video =~ \.mp4$ ]]
             then
+                name=${video/%".mp4"/".jpg"}
+
+                if [ -f "$name" ] && [ ! "$FORCE" = "y" ]
+                then
+                    echo "$name exists, skip."
+                    return
+                fi
+
                 eval $(ffprobe -select_streams v \
                     -show_frames -v quiet \
                     -show_entries frame=pict_type \
@@ -22,7 +34,6 @@ function walk() {
                     | cut -d ':' -f 1 \
                     | awk 'NR==$KEY_FRAME_INDEX{print "key="$1}')
 
-                name=${video/%".mp4"/".jpg"}
                 
                 ffmpeg -i $video \
                     -vf select="between(n\,$key\,$key),setpts=PTS-STARTPTS" \

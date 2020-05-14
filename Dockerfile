@@ -10,4 +10,4 @@ COPY main.sh .
 
 ENTRYPOINT [ "/main.sh" ]
 
-CMD [ "4" ]
+CMD [ "4", "n" ]
