@@ -32,7 +32,8 @@ function walk() {
                     -of csv $video \
                     | grep -n I \
                     | cut -d ':' -f 1 \
-                    | awk 'NR==$KEY_FRAME_INDEX{print "key="$1}')
+                    | awk -v KEY_FRAME_INDEX="$KEY_FRAME_INDEX"\
+                        'NR==KEY_FRAME_INDEX{print "key="$1}')
 
                 
                 ffmpeg -i $video \
@@ -40,7 +41,7 @@ function walk() {
                     -y -v quiet \
                     $name
 
-                echo $name
+                echo "$name choose from $key frame"
             fi
         fi
     done
