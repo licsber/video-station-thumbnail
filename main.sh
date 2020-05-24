@@ -23,7 +23,7 @@ function walk() {
                 if [ -f "$name" ] && [ ! "$FORCE" = "y" ]
                 then
                     echo "$name exists, skip."
-                    return
+                    continue
                 fi
 
                 eval $(ffprobe -select_streams v \
